@@ -1,3 +1,11 @@
+:root {
+  --goal: rgb(135, 119, 217);
+  --bug: #e5493a;
+  --story: #63ba3c;
+  --task: #4bade8;
+  --subtask: #4bade8;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

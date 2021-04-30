@@ -1,53 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import ReactFlow, {
   Background,
-  Elements,
   BackgroundVariant,
   MiniMap,
   Node,
   Controls,
-  ArrowHeadType,
 } from 'react-flow-renderer';
 import './App.css';
 import { DataType } from './typings/DataType';
-// import data from './mockData/result.json';
-import { dataAdaptor } from './dataAdaptor';
 import { NodeItem } from './components/NodeItem';
-const data: DataType[] = [
-  {
-    assignees: ['gy.huang@aftership.com'],
-    blocked_by: [],
-    key: 'RTC-001',
-    children: ['RTC-002'],
-    status: 'in_progress',
-    title: 'Parent story',
-    issue_type: 'story',
-  },
-  {
-    assignees: ['gy.huang@aftership.com'],
-    blocked_by: [],
-    key: 'RTC-002',
-    children: [],
-    status: 'in_progress',
-    title: 'Child task',
-    issue_type: 'task',
-  },
-];
+import { observer } from 'mobx-react-lite';
+import { rootStore } from './store/rootStore';
+// import { data } from './mockData/simpleData';
+import { toJS } from 'mobx';
+import data from './mockData/result.json';
 
-function App() {
-  const [elements, setElements] = useState<Elements<DataType>>([]);
+const App = observer(() => {
   const [gapSize, setGapSize] = useState(20);
   const [dotColor, setDotColor] = useState('#bbb');
   useEffect(() => {
-    setElements(dataAdaptor(data as any));
+    rootStore.init(data as any);
   }, []);
   return (
     <div className="App">
       <ReactFlow
-        elements={elements}
+        elements={toJS(rootStore.elements)}
         nodesConnectable={false}
         nodeTypes={{ special: NodeItem }}
-        defaultZoom={1.5}
+        defaultZoom={0.5}
         defaultPosition={[200, 200]}
         snapToGrid
         snapGrid={[gapSize, gapSize]}
@@ -79,6 +59,6 @@ function App() {
       </ReactFlow>
     </div>
   );
-}
+});
 
 export default App;
