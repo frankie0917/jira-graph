@@ -1,0 +1,643 @@
+[
+  {
+    "assignees": [
+      "sy.ma@aftership.com",
+      "hm.yuan@aftership.com",
+      "travis.peng@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [
+      "RTC-8705",
+      "RTC-8757",
+      "RTC-8761"
+    ],
+    "key": "RTC-7750",
+    "status": "in_progress",
+    "title": "<RV> Review detail sheet",
+    "issue_type": "story"
+  },
+  {
+    "assignees": [
+      "zy.liao@aftership.com",
+      "jf.ke@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [
+      "RTC-8745",
+      "RTC-8746",
+      "RTC-8747",
+      "RTC-8758",
+      "RTC-8842"
+    ],
+    "key": "RTC-8227",
+    "status": "closed",
+    "title": "<RV> Support can help merchant insert code automatically in admin portal - Debutify in admin portal",
+    "issue_type": "story"
+  },
+  {
+    "assignees": [
+      "andrew@aftership.com",
+      "gy.huang@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [
+      "RTC-8323",
+      "RTC-8772",
+      "RTC-8773"
+    ],
+    "key": "RTC-8254",
+    "status": "closed",
+    "title": "<RV>[Investigate] Video review display in review widget & admin only for CSV",
+    "issue_type": "task"
+  },
+  {
+    "assignees": [
+      "andrew@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8323",
+    "status": "closed",
+    "title": "<RV>[DESIGN] Video display in admin & review widget",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "y.chen@aftership.com",
+      "travis.peng@aftership.com",
+      "zy.liao@aftership.com"
+    ],
+    "blocked_by": [
+      "TSRE-15329"
+    ],
+    "children": [
+      "RTC-8740",
+      "RTC-8741",
+      "RTC-8797",
+      "RTC-8798",
+      "RTC-8799",
+      "RTC-8804",
+      "RTC-8806",
+      "RTC-8844"
+    ],
+    "key": "RTC-8648",
+    "status": "in_progress",
+    "title": "<RV> User can add video link in the csv file and upload",
+    "issue_type": "story"
+  },
+  {
+    "assignees": [
+      "c.xu@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [
+      "RTC-8802",
+      "RTC-8803",
+      "RTC-8845"
+    ],
+    "key": "RTC-8649",
+    "status": "in_progress",
+    "title": "<RV> User see can promotion banner in csv upload section",
+    "issue_type": "story"
+  },
+  {
+    "assignees": [
+      "travis.peng@aftership.com",
+      "gy.huang@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [
+      "RTC-8725",
+      "RTC-8728",
+      "RTC-8832",
+      "RTC-8833",
+      "RTC-8835"
+    ],
+    "key": "RTC-8650",
+    "status": "in_progress",
+    "title": "<RV> User can view imported video in manage reviews page",
+    "issue_type": "story"
+  },
+  {
+    "assignees": [
+      "y.chen@aftership.com",
+      "gy.huang@aftership.com",
+      "c.xu@aftership.com",
+      "jf.ke@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [
+      "RTC-8726",
+      "RTC-8813",
+      "RTC-8814",
+      "RTC-8815",
+      "RTC-8816",
+      "RTC-8821",
+      "RTC-8834",
+      "RTC-8837"
+    ],
+    "key": "RTC-8651",
+    "status": "in_progress",
+    "title": "<RV> Buyer can view video in the main review widget",
+    "issue_type": "story"
+  },
+  {
+    "assignees": [
+      "sy.ma@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8705",
+    "status": "open",
+    "title": "<RV>[DATA] 详情页sheet埋点方案",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "travis.peng@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8725",
+    "status": "closed",
+    "title": "[BE] /get reviews 根据 type 排序",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "y.chen@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8726",
+    "status": "in_progress",
+    "title": "[BE] /get shopper/reviews 排序",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "gy.huang@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8728",
+    "status": "closed",
+    "title": "[FE]列表页中视频thumbnail",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "gy.huang@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8729",
+    "status": "closed",
+    "title": "<RV> fix & deploy widget customization",
+    "issue_type": "bug"
+  },
+  {
+    "assignees": [
+      "y.chen@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8740",
+    "status": "in_progress",
+    "title": "[BE] 新增字段用于 reviews 排序",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "y.chen@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8740",
+    "status": "in_progress",
+    "title": "[BE] 新增字段用于 reviews 排序",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "travis.peng@aftership.com"
+    ],
+    "blocked_by": [
+      "RTC-8772",
+      "RTC-8740"
+    ],
+    "children": [],
+    "key": "RTC-8741",
+    "status": "in_progress",
+    "title": "[BE] 导入csv 根据后缀来识别视频 保存video_urls",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "zy.liao@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8745",
+    "status": "closed",
+    "title": "[BE] Admin portal 增加 command",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "zy.liao@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8746",
+    "status": "closed",
+    "title": "[BE] reviews-api 增加 command handler",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "zy.liao@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8747",
+    "status": "closed",
+    "title": "[BE] 更新 product reviews package",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "hm.yuan@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8757",
+    "status": "in_progress",
+    "title": "<RV>[FE] Review detail sheet",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "jf.ke@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8758",
+    "status": "closed",
+    "title": "[FE] Update shopify-liquid-helper -> support debutify 3.0.0",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "travis.peng@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8761",
+    "status": "closed",
+    "title": "<RV> [BE] PATCH GET review by id",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "gy.huang@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8772",
+    "status": "closed",
+    "title": "前端给出支持的文件类型列表",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "gy.huang@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8772",
+    "status": "closed",
+    "title": "前端给出支持的文件类型列表",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "gy.huang@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8773",
+    "status": "closed",
+    "title": "[FE] 是否可行: Lazy loading -> 不要在没点到的时候就加载 video 拖慢网站",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "y.chen@aftership.com"
+    ],
+    "blocked_by": [
+      "RTC-8838"
+    ],
+    "children": [],
+    "key": "RTC-8797",
+    "status": "in_progress",
+    "title": "[BE] SRE ticket 清洗 ranking 数据",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "travis.peng@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8798",
+    "status": "in_progress",
+    "title": "[BE] 新增字段来存 video_urls",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "zy.liao@aftership.com"
+    ],
+    "blocked_by": [
+      "TSRE-15337"
+    ],
+    "children": [],
+    "key": "RTC-8799",
+    "status": "in_progress",
+    "title": "[BE] 新增 index 用于 reviews 排序",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "c.xu@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8802",
+    "status": "in_progress",
+    "title": "[component] add general promote banner component",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "c.xu@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8803",
+    "status": "in_progress",
+    "title": "[component] add promote video link upload banner",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "travis.peng@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8804",
+    "status": "in_progress",
+    "title": "[BE] 创建 reviews 时计算 ranking",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "travis.peng@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8806",
+    "status": "closed",
+    "title": "[BE] 在创建 reviews 时 计算 ranking",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "gy.huang@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8813",
+    "status": "in_progress",
+    "title": "[FE] add video thumbnail to card component",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "gy.huang@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8814",
+    "status": "closed",
+    "title": "[FE] create detail modal",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8815",
+    "status": "open",
+    "title": "[FE] add slide control to modal",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "gy.huang@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8816",
+    "status": "open",
+    "title": "[FE] add mobile detail modal below breakpoint",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "c.xu@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8821",
+    "status": "in_progress",
+    "title": "[FE] [investigate] video component",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8832",
+    "status": "open",
+    "title": "[FE]video player",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "gy.huang@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8833",
+    "status": "in_progress",
+    "title": "[FE]detail modal(modal only)",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8834",
+    "status": "open",
+    "title": "[FE] detail modal (just container)",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8835",
+    "status": "open",
+    "title": "[FE]slider component & insert it in modal and sheet",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "jf.ke@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8837",
+    "status": "in_progress",
+    "title": "[FE] [solution] need an solution for sync duration between modal and video card",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8838",
+    "status": "open",
+    "title": "[Move to SRE][DBA] Need to modify DB data - rv-p-core",
+    "issue_type": "task"
+  },
+  {
+    "assignees": [
+      "jf.ke@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8842",
+    "status": "closed",
+    "title": "[FE] adjust theme style",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8844",
+    "status": "open",
+    "title": "[FE] 更新 csv template / 检查 csv header 时允许 video_url_1 ~ video_url_6",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [],
+    "blocked_by": [],
+    "children": [],
+    "key": "RTC-8845",
+    "status": "open",
+    "title": "[验收] UI 验收 （in kiwi）",
+    "issue_type": "subtask"
+  },
+  {
+    "assignees": [
+      "gy.huang@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [
+      "RTC-8729"
+    ],
+    "key": "SG1",
+    "status": "closed",
+    "title": "Sprint Goal 1",
+    "issue_type": "goal"
+  },
+  {
+    "assignees": [
+      "zy.liao@aftership.com",
+      "jf.ke@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [
+      "RTC-8227"
+    ],
+    "key": "SG2",
+    "status": "closed",
+    "title": "Sprint Goal 2",
+    "issue_type": "goal"
+  },
+  {
+    "assignees": [
+      "y.chen@aftership.com",
+      "gy.huang@aftership.com",
+      "c.xu@aftership.com",
+      "jf.ke@aftership.com",
+      "travis.peng@aftership.com",
+      "zy.liao@aftership.com",
+      "andrew@aftership.com",
+      "sy.ma@aftership.com",
+      "hm.yuan@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [
+      "RTC-8651",
+      "RTC-8650",
+      "RTC-8649",
+      "RTC-8648",
+      "RTC-8254",
+      "RTC-7750"
+    ],
+    "key": "SG3",
+    "status": "in_progress",
+    "title": "Sprint Goal 3",
+    "issue_type": "goal"
+  },
+  {
+    "assignees": [
+      "xs.peng@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "TSRE-15329",
+    "status": "in_progress",
+    "title": "[DBA] Request operation on production database - rv-p-core",
+    "issue_type": "task"
+  },
+  {
+    "assignees": [
+      "xs.peng@aftership.com"
+    ],
+    "blocked_by": [],
+    "children": [],
+    "key": "TSRE-15329",
+    "status": "in_progress",
+    "title": "[DBA] Request operation on production database - rv-p-core",
+    "issue_type": "task"
+  },
+  {
+    "assignees": [
+      "xs.peng@aftership.com"
+    ],
+    "blocked_by": [
+      "TSRE-15329"
+    ],
+    "children": [],
+    "key": "TSRE-15337",
+    "status": "in_progress",
+    "title": "[DBA] Modify db schema",
+    "issue_type": "task"
+  }
+]
