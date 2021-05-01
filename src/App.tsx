@@ -5,6 +5,7 @@ import ReactFlow, {
   MiniMap,
   Node,
   Controls,
+  ReactFlowProps,
 } from 'react-flow-renderer';
 import './App.css';
 import { DataType } from './typings/DataType';
@@ -14,15 +15,20 @@ import { rootStore } from './store/rootStore';
 // import { data } from './mockData/simpleData';
 import { toJS } from 'mobx';
 import data from './mockData/result.json';
+import { DOT_COLOR, GAP_SIZE } from './constant/Background';
 
 const App = observer(() => {
-  const [gapSize, setGapSize] = useState(20);
-  const [dotColor, setDotColor] = useState('#bbb');
+  const [gapSize, setGapSize] = useState(GAP_SIZE);
+  const [dotColor, setDotColor] = useState(DOT_COLOR);
   useEffect(() => {
     rootStore.init(data as any);
   }, []);
+  const onElementClick: ReactFlowProps['onElementClick'] = (event, element) => {
+    console.log('element', element);
+  };
   return (
     <div className="App">
+      <div className="SideBar"></div>
       <ReactFlow
         elements={toJS(rootStore.elements)}
         nodesConnectable={false}
@@ -31,6 +37,8 @@ const App = observer(() => {
         defaultPosition={[200, 200]}
         snapToGrid
         snapGrid={[gapSize, gapSize]}
+        nodesDraggable={false}
+        onElementClick={onElementClick}
       >
         <Background
           variant={BackgroundVariant.Dots}

@@ -1,106 +1,127 @@
-import { uniqBy } from 'lodash';
+import { isNull, uniqBy } from 'lodash';
 import { makeAutoObservable, toJS } from 'mobx';
-import { ArrowHeadType, Edge, Node, Position } from 'react-flow-renderer';
-import { COLUMN_GAP, ROW_GAP, X_POS } from '../constant/Xpos';
+import { Edge, Node } from 'react-flow-renderer';
+import { DEFAULT_EDGE } from '../constant/Edge';
+import { DEFAULT_NODE } from '../constant/Node';
+import { ROW_GAP, COLUMN_GAP } from '../constant/Gap';
 import { DataType } from '../typings/DataType';
 import { Tree } from './Tree';
 
-const constructTree = (tree: Tree, root: Tree) => {
-  tree.data?.children.forEach((key) => {
-    if (root.hasChild(key)) {
-      tree.addChild(root.children[key]);
-      root.removeChild(key);
-    }
-  });
-  Object.entries(tree.children).forEach(([key]) => {
-    if (tree.hasChild(key)) {
-      constructTree(tree.children[key], root);
-    }
-  });
-};
-
 class RootStore {
   elements: (Node | Edge)[] = [];
-  rootTree: Tree = new Tree('root', {});
-  numbers = { story_task: 0, subtask_bug: 0, goal: 0, extra: 0 };
+  count = {
+    edge: 0,
+    node: 0,
+  };
+  rootTree: Tree = new Tree('root', null, {});
+  treeMap: Tree = new Tree('root', null, {});
 
   constructor() {
     makeAutoObservable(this);
+  }
+  constructTree(tree: Tree) {
+    tree.data?.children.forEach((key) => {
+      if (this.rootTree.hasChild(key)) {
+        const child = this.rootTree.children[key];
+        child.parentId = tree.id;
+        tree.addChild(child);
+        this.treeMap.addChild(child);
+        this.rootTree.removeChild(key);
+      }
+    });
+    Object.entries(tree.children).forEach(([key]) => {
+      if (tree.hasChild(key)) {
+        this.constructTree(tree.children[key]);
+      }
+    });
   }
 
   makeTree(data: DataType[]) {
     const uniqData = uniqBy(data, 'key');
 
     uniqData.forEach((node) => {
-      this.rootTree.addChild(new Tree(node.key, {}, node));
+      const child = new Tree(node.key, 'root', {}, node);
+      this.rootTree.addChild(child);
+      this.treeMap.addChild(child);
     });
-    constructTree(this.rootTree, this.rootTree);
+    this.constructTree(this.rootTree);
   }
-  makeElements() {
-    const traverse = (tree: Tree, parentId: string) => {
-      let isExtra = false;
-      const calcY = () => {
-        const type = tree.data!.issue_type;
 
-        switch (type) {
+  pushNode({ id, data, position }: Tree) {
+    this.count.node += 1;
+    this.elements.push({
+      ...DEFAULT_NODE,
+      id,
+      data,
+      position,
+    });
+  }
+
+  pushEdge(tree: Tree, childId: string) {
+    this.count.edge += 1;
+    this.elements.push({
+      ...DEFAULT_EDGE,
+      id: 'E|' + tree.id + '-' + childId,
+      source: tree.id,
+      target: childId,
+    });
+  }
+
+  makeElements() {
+    let subtaskBugCount = 0;
+    let extra = -ROW_GAP;
+    const traverse = (tree: Tree) => {
+      const calcY = () => {
+        const values = Object.values(tree.children);
+        if (values.length === 0 && tree.parentId === 'root') return null;
+        let min = Infinity;
+        let max = -Infinity;
+        values.forEach(({ position: { y } }) => {
+          min = y < min ? y : min;
+          max = y > max ? y : max;
+        });
+        return (max - min) / 2 + min;
+      };
+      const findPosition = () => {
+        let y = calcY();
+        if (isNull(y)) {
+          y = extra;
+          extra -= ROW_GAP;
+        }
+        switch (tree.data?.issue_type) {
           case 'subtask':
           case 'bug':
-            this.numbers.subtask_bug += ROW_GAP;
-            return this.numbers.subtask_bug;
+            tree.position = { x: 2 * COLUMN_GAP, y: subtaskBugCount * ROW_GAP };
+            subtaskBugCount += 1;
+            break;
           case 'story':
           case 'task':
-            let res = this.numbers.subtask_bug - (tree.length * ROW_GAP) / 2;
-            this.numbers.story_task = Math.max(res, ROW_GAP);
-            return this.numbers.story_task;
-          default:
-            let num = this.numbers.story_task - (tree.length * ROW_GAP) / 2;
-            this.numbers.goal = Math.max(num, ROW_GAP);
-            return this.numbers.goal;
-        }
-      };
-      const pushElement = () => {
-        if (tree.data) {
-          const x = isExtra
-            ? (this.numbers.extra += COLUMN_GAP)
-            : X_POS[tree.data.issue_type];
-          const y = isExtra ? 0 : calcY();
-          this.elements.push({
-            id: tree.id,
-            data: tree.data,
-            position: { x, y },
-            targetPosition: Position.Left,
-            sourcePosition: Position.Right,
-            type: 'special',
-          });
+            tree.position = { x: 1 * COLUMN_GAP, y };
+            break;
+          case 'goal':
+            tree.position = { x: 0, y };
+            break;
         }
       };
       if (tree.length === 0) {
-        if (parentId === 'root') {
-          isExtra = true;
-        }
-        pushElement();
+        findPosition();
+        this.pushNode(tree);
         return;
       }
-      Object.entries(tree.children).forEach(([key, childTree]) => {
+      Object.entries(tree.children).forEach(([childId, childTree]) => {
         if (tree.id !== 'root') {
-          this.elements.push({
-            id: 'E|' + tree.id + '-' + key,
-            source: tree.id,
-            target: key,
-            arrowHeadType: ArrowHeadType.ArrowClosed,
-            style: {
-              strokeWidth: '3px',
-            },
-          });
+          this.pushEdge(tree, childId);
         }
-        traverse(childTree, tree.id);
+        traverse(childTree);
       });
       if (tree.id !== 'root') {
-        pushElement();
+        findPosition();
+        this.pushNode(tree);
       }
     };
-    traverse(this.rootTree, 'root');
+    traverse(this.rootTree);
     console.log('this.rootTree', toJS(this.rootTree));
+    console.log('this.treeMap', this.treeMap);
     console.log('this.elements', toJS(this.elements));
   }
   init(data: DataType[]) {
