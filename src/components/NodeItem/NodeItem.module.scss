@@ -1,0 +1,35 @@
+.contentWrapper {
+  display: grid;
+  grid-template-columns: 20px auto;
+  padding: 5px 10px;
+  background: #fff;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 2px;
+  max-width: 600px;
+
+  &[data-issue-type='goal'] {
+    border-color: var(--goal);
+  }
+  &[data-issue-type='story'] {
+    border-color: var(--story);
+  }
+  &[data-issue-type='task'] {
+    border-color: var(--task);
+  }
+  &[data-issue-type='subtask'] {
+    border-color: var(--subtask);
+  }
+  &[data-issue-type='bug'] {
+    border-color: var(--bug);
+  }
+  .heading {
+    display: flex;
+    align-items: center;
+    .key {
+      color: #666;
+      white-space: nowrap;
+      margin: 0px 5px;
+    }
+  }
+}
