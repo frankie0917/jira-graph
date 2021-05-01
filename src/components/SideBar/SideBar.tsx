@@ -3,7 +3,7 @@ import React from 'react';
 import { GAP_SIZE, DOT_SIZE } from '../../constant/Background';
 import { useFlowStore } from '../../store';
 import { parseNumber } from '../../utils/parseNumber';
-import { DebouncedInput as Input } from '../Form/DebounceInput1';
+import { DebouncedInput as Input } from '../Form/DebounceInput';
 import { Disclosure } from './Disclosure/Disclosure';
 
 export const SideBar = observer(() => {
