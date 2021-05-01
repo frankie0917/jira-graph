@@ -7,7 +7,7 @@ import { ROW_GAP, COLUMN_GAP } from '../constant/Gap';
 import { DataType } from '../typings/DataType';
 import { Tree } from './Tree';
 
-class RootStore {
+export class TreeStore {
   elements: (Node | Edge)[] = [];
   count = {
     edge: 0,
@@ -129,5 +129,3 @@ class RootStore {
     this.makeElements();
   }
 }
-
-export const rootStore = new RootStore();
