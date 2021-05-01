@@ -18,7 +18,7 @@ export const ReactFlowContainer = observer(() => {
     console.log('element', element);
   };
   const { elements } = useTreeStore();
-  const { gapSize, dotColor } = useFlowStore();
+  const { gapSize, dotColor, dotSize } = useFlowStore();
   return (
     <ReactFlow
       elements={toJS(elements)}
@@ -34,7 +34,7 @@ export const ReactFlowContainer = observer(() => {
       <Background
         variant={BackgroundVariant.Dots}
         gap={gapSize}
-        size={1}
+        size={dotSize}
         color={dotColor}
       />
       <MiniMap
