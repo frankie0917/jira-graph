@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --goal: rgb(135, 119, 217);
   --bug: #e5493a;
