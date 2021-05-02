@@ -3,6 +3,8 @@ import { DataType, TICKET_STATUS } from '../../typings/DataType';
 import { Handle, Node, Position } from 'react-flow-renderer';
 import styles from './NodeItem.module.scss';
 import { IssueIcon } from '../IssueIcon/IssueIcon';
+import { EyeIcon } from '@heroicons/react/solid';
+import { useTreeStore } from '../../store';
 
 const parseProgress = (status: TICKET_STATUS) => {
   switch (status) {
@@ -20,14 +22,13 @@ const parseProgress = (status: TICKET_STATUS) => {
 };
 
 export const NodeItem = React.memo((node: Node<DataType>) => {
+  const TreeStore = useTreeStore();
   if (!node.data) return null;
   const { title, issue_type, key, status } = node.data;
 
   return (
     <div>
-      {issue_type !== 'goal' && (
-        <Handle type="target" position={Position.Left} />
-      )}
+      <Handle type="target" position={Position.Left} />
       <div className={styles.contentWrapper} data-issue-type={issue_type}>
         <div className={styles.heading}>
           <div className={styles.iconKey}>
@@ -52,11 +53,17 @@ export const NodeItem = React.memo((node: Node<DataType>) => {
         >
           {parseProgress(status)[0]}
         </div>
-        <div></div>
+        <div className={styles.actionWrapper}>
+          <button
+            onClick={() => {
+              TreeStore.showOnlyItemRelatedNode(node.id);
+            }}
+          >
+            <EyeIcon className=" w-5 h-5 text-green-600" />
+          </button>
+        </div>
       </div>
-      {issue_type !== 'bug' && issue_type !== 'subtask' && (
-        <Handle type="source" position={Position.Right} />
-      )}
+      <Handle type="source" position={Position.Right} />
     </div>
   );
 });

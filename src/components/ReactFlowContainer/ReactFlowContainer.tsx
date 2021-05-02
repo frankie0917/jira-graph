@@ -6,22 +6,19 @@ import ReactFlow, {
   BackgroundVariant,
   MiniMap,
   Controls,
-  ReactFlowProps,
   Node,
+  Elements,
 } from 'react-flow-renderer';
 import { DataType } from '../../typings/DataType';
 import { NodeItem } from '../NodeItem';
 import { useFlowStore, useTreeStore } from '../../store';
 
 export const ReactFlowContainer = observer(() => {
-  const onElementClick: ReactFlowProps['onElementClick'] = (event, element) => {
-    console.log('element', element);
-  };
   const { elements } = useTreeStore();
   const { gapSize, dotColor, dotSize } = useFlowStore();
   return (
     <ReactFlow
-      elements={toJS(elements)}
+      elements={toJS(elements) as Elements}
       nodesConnectable={false}
       nodeTypes={{ special: NodeItem }}
       defaultZoom={0.5}
@@ -29,7 +26,6 @@ export const ReactFlowContainer = observer(() => {
       snapToGrid
       snapGrid={[gapSize, gapSize]}
       nodesDraggable={false}
-      onElementClick={onElementClick}
     >
       <Background
         variant={BackgroundVariant.Dots}

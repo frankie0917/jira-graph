@@ -1,5 +1,5 @@
 import { isNull, uniqBy } from 'lodash';
-import { makeAutoObservable, toJS } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 import { Edge, Node } from 'react-flow-renderer';
 import { DEFAULT_EDGE } from '../constant/Edge';
 import { DEFAULT_NODE } from '../constant/Node';
@@ -7,8 +7,12 @@ import { ROW_GAP, COLUMN_GAP } from '../constant/Gap';
 import { DataType } from '../typings/DataType';
 import { Tree } from './Tree';
 
+type Element = Partial<Edge & Node> & {
+  id: string;
+};
+
 export class TreeStore {
-  elements: (Node | Edge)[] = [];
+  elements: Element[] = [];
   count = {
     edge: 0,
     node: 0,
@@ -57,17 +61,21 @@ export class TreeStore {
     });
   }
 
-  pushEdge(tree: Tree, childId: string) {
+  pushEdge(parentId: string, childId: string, type: 'E' | 'B') {
     this.count.edge += 1;
     this.elements.push({
       ...DEFAULT_EDGE,
-      id: 'E|' + tree.id + '-' + childId,
-      source: tree.id,
+      id: `${type}|${parentId}-${childId}`,
+      source: parentId,
       target: childId,
+      style: {
+        stroke: type === 'B' ? 'red' : undefined,
+      },
     });
   }
 
-  makeElements() {
+  traverseTreeAndMakeGraph(targetTree: Tree) {
+    this.elements = [];
     let subtaskBugCount = 0;
     let extra = -ROW_GAP;
     const traverse = (tree: Tree) => {
@@ -108,9 +116,12 @@ export class TreeStore {
         this.pushNode(tree);
         return;
       }
+      tree.data?.blocked_by.forEach((blockedById) => {
+        this.pushEdge(blockedById, tree.id, 'B');
+      });
       Object.entries(tree.children).forEach(([childId, childTree]) => {
         if (tree.id !== 'root') {
-          this.pushEdge(tree, childId);
+          this.pushEdge(tree.id, childId, 'E');
         }
         traverse(childTree);
       });
@@ -119,13 +130,75 @@ export class TreeStore {
         this.pushNode(tree);
       }
     };
-    traverse(this.rootTree);
-    console.log('this.rootTree', toJS(this.rootTree));
-    console.log('this.treeMap', this.treeMap);
-    console.log('this.elements', toJS(this.elements));
+    traverse(targetTree);
+  }
+  showAllTree() {
+    this.traverseTreeAndMakeGraph(this.rootTree);
+    this.elements.forEach((node) => {
+      node.isHidden = false;
+    });
+  }
+
+  findGreatestParentId(
+    id: string,
+    callback?: (tree: Tree) => void,
+  ): string | null {
+    if (!this.treeMap.hasChild(id)) return null;
+    const tree = this.treeMap.children[id];
+    callback && callback(tree);
+    if (tree.parentId === 'root' || tree.parentId === null) return id;
+    return this.findGreatestParentId(tree.parentId, callback);
+  }
+  findAllChildrenId(id: string, ids: string[] = []) {
+    if (this.treeMap.children[id].length === 0) {
+      ids.push(id);
+      return ids;
+    }
+    Object.entries(this.treeMap.children[id].children).forEach(
+      ([key, child]) => {
+        this.findAllChildrenId(key, ids);
+      },
+    );
+    ids.push(id);
+    return ids;
+  }
+  showOnlyItemRelatedNode(id: string) {
+    // calculating relating id
+    const includeIds: string[] = [];
+    const targetTree = this.treeMap.children[id];
+    includeIds.push(...(targetTree.data?.blocked_by ?? []));
+    const parentId = targetTree.parentId;
+    if (parentId === null) return;
+    // include all siblings unless its parent is root
+    if (parentId !== 'root') {
+      includeIds.push(...Object.keys(this.treeMap.children[parentId].children));
+    }
+    // adding all parent nodes
+    this.findGreatestParentId(id, (tree) => {
+      if (tree.id === null || tree.id === 'root') return;
+      includeIds.push(tree.id);
+    });
+    includeIds.push(...this.findAllChildrenId(id));
+    this.elements.forEach((node) => {
+      if (node.data !== undefined) {
+        node.isHidden = !includeIds.includes(node.id);
+      } else {
+        // its an edge
+        if (
+          includeIds.includes(node.source!) &&
+          includeIds.includes(node.target!)
+        ) {
+          node.isHidden = false;
+          return;
+        }
+
+        node.isHidden = true;
+      }
+    });
+    // this.traverseTreeAndMakeGraph(this.treeMap.children[greatestParentId]);
   }
   init(data: DataType[]) {
     this.makeTree(data);
-    this.makeElements();
+    this.showAllTree();
   }
 }

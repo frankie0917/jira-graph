@@ -53,4 +53,8 @@
     transform: translate(0, -100%);
     transition: 0.5s height ease-in-out;
   }
+  .actionWrapper {
+    position: absolute;
+    padding: 4px;
+  }
 }

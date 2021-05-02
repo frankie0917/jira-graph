@@ -1,15 +1,14 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { GAP_SIZE, DOT_SIZE } from '../../constant/Background';
-import { useFlowStore } from '../../store';
+import { useStore } from '../../store';
 import { parseNumber } from '../../utils/parseNumber';
 import { DebouncedInput as Input } from '../Form/DebounceInput';
 import { Disclosure } from './Disclosure/Disclosure';
 import { ReactComponent as Logo } from '../../static/Logo.svg';
+import { Button } from '../Button';
 
 export const SideBar = observer(() => {
-  const FlowStore = useFlowStore();
-
+  const { FlowStore, TreeStore } = useStore();
   return (
     <div className="SideBar bg-white p-2 shadow-lg max-w-xs w-80 transition-all">
       <div className="my-5 px-4">
@@ -32,6 +31,7 @@ export const SideBar = observer(() => {
           onChange={(val) => FlowStore.setGapSize(parseNumber(val, GAP_SIZE))}
         />
       </Disclosure>
+      <Button onClick={() => TreeStore.showAllTree()}>Show All Tree</Button>
     </div>
   );
 });
