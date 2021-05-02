@@ -25,7 +25,7 @@ export const ReactFlowContainer = observer(() => {
       defaultPosition={[200, 200]}
       snapToGrid
       snapGrid={[gapSize, gapSize]}
-      nodesDraggable={false}
+      nodesDraggable={true}
     >
       <Background
         variant={BackgroundVariant.Dots}

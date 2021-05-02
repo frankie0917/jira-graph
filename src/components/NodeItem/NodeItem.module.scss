@@ -54,7 +54,11 @@
     transition: 0.5s height ease-in-out;
   }
   .actionWrapper {
+    display: flex;
     position: absolute;
     padding: 4px;
+  }
+  .actionWrapper > *:not(:last-child) {
+    margin-right: 8px;
   }
 }

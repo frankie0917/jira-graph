@@ -3,7 +3,8 @@ import { DataType, TICKET_STATUS } from '../../typings/DataType';
 import { Handle, Node, Position } from 'react-flow-renderer';
 import styles from './NodeItem.module.scss';
 import { IssueIcon } from '../IssueIcon/IssueIcon';
-import { EyeIcon } from '@heroicons/react/solid';
+import { EyeIcon as SolidEye } from '@heroicons/react/solid';
+import { EyeIcon as OutlineEye } from '@heroicons/react/outline';
 import { useTreeStore } from '../../store';
 
 const parseProgress = (status: TICKET_STATUS) => {
@@ -25,6 +26,16 @@ export const NodeItem = React.memo((node: Node<DataType>) => {
   const TreeStore = useTreeStore();
   if (!node.data) return null;
   const { title, issue_type, key, status } = node.data;
+
+  const renderIconButton = (
+    tooltip: string,
+    onClick: () => void,
+    Icon: JSX.Element,
+  ) => (
+    <button data-tooltip-text={tooltip} onClick={onClick}>
+      {Icon}
+    </button>
+  );
 
   return (
     <div>
@@ -54,13 +65,20 @@ export const NodeItem = React.memo((node: Node<DataType>) => {
           {parseProgress(status)[0]}
         </div>
         <div className={styles.actionWrapper}>
-          <button
-            onClick={() => {
+          {renderIconButton(
+            'Show only item related node',
+            () => {
               TreeStore.showOnlyItemRelatedNode(node.id);
-            }}
-          >
-            <EyeIcon className=" w-5 h-5 text-green-600" />
-          </button>
+            },
+            <SolidEye className=" w-5 h-5 text-green-600" />,
+          )}
+          {renderIconButton(
+            'Render only item related node',
+            () => {
+              TreeStore.renderOnlyItemRelatedNode(node.id);
+            },
+            <OutlineEye className=" w-5 h-5 text-indigo-600" />,
+          )}
         </div>
       </div>
       <Handle type="source" position={Position.Right} />

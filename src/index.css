@@ -27,3 +27,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+[data-tooltip-text] {
+  position: relative;
+}
+
+[data-tooltip-text]:hover::before {
+  content: attr(data-tooltip-text);
+  white-space: nowrap;
+  font-size: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #444;
+  color: white;
+  transform: translateY(-100%);
+  padding: 2px 4px;
+}
