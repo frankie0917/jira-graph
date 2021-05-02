@@ -11,8 +11,8 @@ export const SideBar = observer(() => {
   const FlowStore = useFlowStore();
 
   return (
-    <div className="SideBar bg-white p-2 shadow-lg max-w-xs w-80">
-      <div className="mb-5">
+    <div className="SideBar bg-white p-2 shadow-lg max-w-xs w-80 transition-all">
+      <div className="my-5 px-4">
         <Logo />
       </div>
       <Disclosure title="Background">

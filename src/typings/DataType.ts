@@ -1,4 +1,9 @@
-export type TICKET_STATUS = 'open' | 'closed' | 'in_progress';
+export type TICKET_STATUS =
+  | 'open'
+  | 'in_progress'
+  | 'ready_to_test'
+  | 'readey_to_deploy'
+  | 'closed';
 
 export type TICKET_ISSUE_TYPE = 'story' | 'task' | 'subtask' | 'bug' | 'goal';
 

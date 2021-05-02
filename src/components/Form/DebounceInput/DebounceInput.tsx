@@ -1,3 +1,4 @@
+import { FocusTrap } from '@headlessui/react';
 import { isUndefined } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';

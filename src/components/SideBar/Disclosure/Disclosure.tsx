@@ -20,7 +20,7 @@ export const Disclosure = ({ title, children }: PropsWithChildren<Props>) => {
                 } w-5 h-5 text-purple-500`}
               />
             </DisclosureUI.Button>
-            <DisclosureUI.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+            <DisclosureUI.Panel className="p-2 text-sm text-gray-500">
               {children}
             </DisclosureUI.Panel>
           </>
