@@ -1,5 +1,5 @@
 import React from 'react';
-import { TICKET_ISSUE_TYPE } from '../../typings/DataType';
+import { TICKET_ISSUE_TYPE } from '../../typing/DataType';
 
 const url: Record<TICKET_ISSUE_TYPE, string> = {
   task:

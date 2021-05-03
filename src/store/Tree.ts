@@ -1,5 +1,5 @@
 import { isUndefined } from 'lodash';
-import { DataType } from '../typings/DataType';
+import { DataType } from '../typing/DataType';
 
 export class Tree {
   public length = 0;

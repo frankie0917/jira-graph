@@ -4,7 +4,7 @@ import { Edge, Node } from 'react-flow-renderer';
 import { DEFAULT_EDGE } from '../constant/Edge';
 import { DEFAULT_NODE } from '../constant/Node';
 import { ROW_GAP, COLUMN_GAP } from '../constant/Gap';
-import { DataType } from '../typings/DataType';
+import { DataType } from '../typing/DataType';
 import { Tree } from './Tree';
 
 type Element = Partial<Edge & Node> & {

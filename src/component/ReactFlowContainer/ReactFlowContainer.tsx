@@ -9,7 +9,7 @@ import ReactFlow, {
   Node,
   Elements,
 } from 'react-flow-renderer';
-import { DataType } from '../../typings/DataType';
+import { DataType } from '../../typing/DataType';
 import { NodeItem } from '../NodeItem';
 import { useFlowStore, useTreeStore } from '../../store';
 

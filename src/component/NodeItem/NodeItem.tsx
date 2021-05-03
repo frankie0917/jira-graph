@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DataType, TICKET_STATUS } from '../../typings/DataType';
+import { DataType, TICKET_STATUS } from '../../typing/DataType';
 import { Handle, Node, Position } from 'react-flow-renderer';
 import styles from './NodeItem.module.scss';
 import { IssueIcon } from '../IssueIcon/IssueIcon';
