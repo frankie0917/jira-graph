@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './Input.module.scss';
 
 interface Props {
   label?: string;
@@ -9,7 +10,7 @@ interface Props {
 
 export const Input = ({ placeholder, label, onChange, value }: Props) => {
   return (
-    <div className="flex flex-col pt-2">
+    <div className={styles.inputGroup + ' flex flex-col w-full'}>
       <label className="text-gray-600 text-sm font-bold leading-tight tracking-normal mb-2">
         {label}
       </label>

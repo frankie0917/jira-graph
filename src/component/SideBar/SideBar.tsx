@@ -3,9 +3,10 @@ import { GAP_SIZE, DOT_SIZE } from '../../constant/Background';
 import { useStore } from '../../store';
 import { parseNumber } from '../../utils/parseNumber';
 import { DebouncedInput as Input } from '../Form/DebounceInput';
-import { Disclosure } from './Disclosure/Disclosure';
+import { Disclosure } from './components/Disclosure/Disclosure';
 import { ReactComponent as Logo } from '../../static/Logo.svg';
 import { Button } from '../Button';
+import { Keybind } from './components/Keybind/Keybind';
 
 export const SideBar = observer(() => {
   const { FlowStore, TreeStore } = useStore();
@@ -30,6 +31,9 @@ export const SideBar = observer(() => {
           value={FlowStore.gapSize + ''}
           onChange={(val) => FlowStore.setGapSize(parseNumber(val, GAP_SIZE))}
         />
+      </Disclosure>
+      <Disclosure title="Keybinds">
+        <Keybind keys={['Q', 'S']} desc="Global search" />
       </Disclosure>
       <Button onClick={() => TreeStore.showAllTree()}>Show All Tree</Button>
     </div>
