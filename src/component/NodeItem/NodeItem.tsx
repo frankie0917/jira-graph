@@ -41,7 +41,6 @@ export const NodeItem = React.memo(
         {Icon}
       </button>
     );
-
     return (
       <div>
         {!isListMode && <Handle type="target" position={Position.Left} />}

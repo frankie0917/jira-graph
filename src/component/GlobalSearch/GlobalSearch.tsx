@@ -17,7 +17,7 @@ export const GlobalSearch = () => {
   const [results, setResults] = useState<string[]>([]);
   const onItemClick = (pos: { x: number; y: number }) => {
     transform({ x: -pos.x + 50, y: -pos.y + 50, zoom: 1 });
-
+    setKeyword('');
     setIsOpen(false);
   };
 
