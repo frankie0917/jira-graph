@@ -23,9 +23,11 @@ const parseProgress = (status: TICKET_STATUS) => {
 };
 
 export const NodeItem = React.memo(
-  (node: Node<DataType> & { listMode?: boolean }) => {
+  (
+    node: Node<DataType> & { listMode?: boolean; xPos?: number; yPos?: number },
+  ) => {
     const TreeStore = useTreeStore();
-    const { fitView } = useZoomPanHelper();
+    const { fitView, transform } = useZoomPanHelper();
     if (!node.data) return null;
     const isListMode = node.listMode;
     const { title, issue_type, key, status } = node.data;
@@ -63,7 +65,20 @@ export const NodeItem = React.memo(
                 </a>
               </div>
             </div>
-            <div className={styles.title}>{title}</div>
+            <div
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
+                console.log('node', node);
+                transform({
+                  x: -(node.xPos ?? 0) + 50,
+                  y: -(node.yPos ?? 0) + 50,
+                  zoom: 1,
+                });
+              }}
+              className={styles.title}
+            >
+              {title}
+            </div>
           </div>
           <div
             className={styles.progress}
