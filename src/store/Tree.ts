@@ -21,6 +21,9 @@ export class Tree {
   hasChild(key: string) {
     return !isUndefined(this.children[key]);
   }
+  getChild(key: string) {
+    return this.children[key] ?? null;
+  }
   removeChild(key: string) {
     if (this.hasChild(key)) {
       delete this.children[key];

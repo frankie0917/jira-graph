@@ -1,4 +1,14 @@
 .searchWrapper {
+  transition: opacity 0.2s ease-in-out;
+  &[data-is-open='true'] {
+    opacity: 1;
+    pointer-events: all;
+  }
+  &[data-is-open='false'] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
   position: fixed;
   top: 20%;
   left: 50%;
@@ -7,4 +17,12 @@
   background: #fff;
   z-index: 10;
   width: 600px;
+
+  .listWrapper {
+    & > *:not(:last-child) {
+      margin-bottom: 12px;
+    }
+    overflow-y: scroll;
+    max-height: 500px;
+  }
 }

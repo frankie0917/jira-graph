@@ -7,9 +7,11 @@ import { Disclosure } from './components/Disclosure/Disclosure';
 import { ReactComponent as Logo } from '../../static/Logo.svg';
 import { Button } from '../Button';
 import { Keybind } from './components/Keybind/Keybind';
+import { useZoomPanHelper } from 'react-flow-renderer';
 
 export const SideBar = observer(() => {
   const { FlowStore, TreeStore } = useStore();
+  const { fitView } = useZoomPanHelper();
   return (
     <div className="SideBar bg-white p-2 shadow-lg max-w-xs w-80 transition-all">
       <div className="my-5 px-4">
@@ -33,9 +35,12 @@ export const SideBar = observer(() => {
         />
       </Disclosure>
       <Disclosure title="Keybinds">
-        <Keybind keys={['Q', 'S']} desc="Global search" />
+        <Keybind keys={['Control', 'Shift', 'S']} desc="Global search" />
       </Disclosure>
-      <Button onClick={() => TreeStore.showAllTree()}>Show All Tree</Button>
+      <Button onClick={() => TreeStore.showAllTree()}>Reset</Button>
+      <Button onClick={() => fitView({ padding: 2, includeHiddenNodes: true })}>
+        Default zoom
+      </Button>
     </div>
   );
 });
