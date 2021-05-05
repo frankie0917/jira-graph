@@ -4,7 +4,7 @@ import { Edge, Node } from 'react-flow-renderer';
 import { DEFAULT_EDGE } from '../constant/Edge';
 import { DEFAULT_NODE } from '../constant/Node';
 import { ROW_GAP, COLUMN_GAP } from '../constant/Gap';
-import { DataType } from '../typings/DataType';
+import { DataType } from '../typing/DataType';
 import { Tree } from './Tree';
 
 type Element = Partial<Edge & Node> & {
@@ -34,7 +34,7 @@ export class TreeStore {
   constructTree(tree: Tree) {
     tree.data?.children.forEach((key) => {
       if (this.rootTree.hasChild(key)) {
-        const child = this.rootTree.children[key];
+        const child = this.rootTree.getChild(key);
         child.parentId = tree.id;
         tree.addChild(child);
         this.treeMap.addChild(child);
@@ -43,7 +43,7 @@ export class TreeStore {
     });
     Object.entries(tree.children).forEach(([key]) => {
       if (tree.hasChild(key)) {
-        this.constructTree(tree.children[key]);
+        this.constructTree(tree.getChild(key));
       }
     });
   }
@@ -63,7 +63,7 @@ export class TreeStore {
 
   pushNode(id: string, isHidden: boolean = false) {
     this.count.node += 1;
-    const { data, position } = this.treeMap.children[id];
+    const { data, position } = this.treeMap.getChild(id);
     this.elements.push({
       ...DEFAULT_NODE,
       id,
@@ -91,10 +91,10 @@ export class TreeStore {
   }
 
   calcPosition(id: string, includeIds?: string[]) {
-    const tree = this.treeMap.children[id];
+    const tree = this.treeMap.getChild(id);
     const calcY = () => {
-      const values = Object.values(tree.children).map(
-        ({ id }) => this.treeMap.children[id],
+      const values = Object.values(tree.children).map(({ id }) =>
+        this.treeMap.getChild(id),
       );
       if (values.length === 0 && tree.parentId === 'root') return null;
       let min = Infinity;
@@ -115,7 +115,7 @@ export class TreeStore {
     if (isNaN(y) && tree.parentId) {
       let res = -Infinity;
 
-      Object.values(this.treeMap.children[tree.parentId].children).forEach(
+      Object.values(this.treeMap.getChild(tree.parentId).children).forEach(
         (sibling) => {
           if (sibling.id === tree.id) return;
 
@@ -142,7 +142,7 @@ export class TreeStore {
         res = { x: 0, y };
         break;
     }
-    this.treeMap.children[tree.id].position = res;
+    this.treeMap.getChild(tree.id).position = res;
   }
   traverseTreeAndMakeGraph(targetTree: Tree, includeIds?: string[]) {
     this.reset();
@@ -184,17 +184,17 @@ export class TreeStore {
     callback?: (tree: Tree) => void,
   ): string | null {
     if (!this.treeMap.hasChild(id)) return null;
-    const tree = this.treeMap.children[id];
+    const tree = this.treeMap.getChild(id);
     callback && callback(tree);
     if (tree.parentId === 'root' || tree.parentId === null) return id;
     return this.findGreatestParentId(tree.parentId, callback);
   }
   findAllChildrenId(id: string, ids: string[] = []) {
-    if (this.treeMap.children[id].length === 0) {
+    if (this.treeMap.getChild(id).length === 0) {
       ids.push(id);
       return ids;
     }
-    Object.entries(this.treeMap.children[id].children).forEach(
+    Object.entries(this.treeMap.getChild(id).children).forEach(
       ([key, child]) => {
         this.findAllChildrenId(key, ids);
       },
@@ -202,13 +202,17 @@ export class TreeStore {
     ids.push(id);
     return ids;
   }
-  renderOnlyItemRelatedNode(id: string) {
+  renderOnlyItemRelatedNode(
+    id: string,
+    /** For transform the canvas after render */
+    transformCallback: () => void,
+  ) {
     const greatestParentId = this.findGreatestParentId(id);
     if (greatestParentId === null) return;
 
     const relatedIds = this.findRelatedIds(id);
     this.traverseTreeAndMakeGraph(
-      this.treeMap.children[greatestParentId],
+      this.treeMap.getChild(greatestParentId),
       relatedIds,
     );
     const diff: string[] = [];
@@ -221,16 +225,17 @@ export class TreeStore {
       this.pushNode(diffId, false);
     });
     this.calcPostionCount = defaultCalcPostionCount;
+    transformCallback();
   }
   findRelatedIds(id: string) {
     const relatedIds: string[] = [];
-    const targetTree = this.treeMap.children[id];
+    const targetTree = this.treeMap.getChild(id);
     relatedIds.push(...(targetTree.data?.blocked_by ?? []));
     const parentId = targetTree.parentId;
     if (parentId === null) return [];
     // include all siblings unless its parent is root
     if (parentId !== 'root') {
-      relatedIds.push(...Object.keys(this.treeMap.children[parentId].children));
+      relatedIds.push(...Object.keys(this.treeMap.getChild(parentId).children));
     }
     // adding all parent nodes
     this.findGreatestParentId(id, (tree) => {

@@ -1,4 +1,4 @@
-import { DataType } from '../typings/DataType';
+import { DataType } from '../typing/DataType';
 
 export const data: DataType[] = [
   {

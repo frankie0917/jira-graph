@@ -1,5 +1,5 @@
 import { isUndefined } from 'lodash';
-import { DataType } from '../typings/DataType';
+import { DataType } from '../typing/DataType';
 
 export class Tree {
   public length = 0;
@@ -20,6 +20,9 @@ export class Tree {
   }
   hasChild(key: string) {
     return !isUndefined(this.children[key]);
+  }
+  getChild(key: string) {
+    return this.children[key] ?? null;
   }
   removeChild(key: string) {
     if (this.hasChild(key)) {

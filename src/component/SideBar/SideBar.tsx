@@ -3,12 +3,15 @@ import { GAP_SIZE, DOT_SIZE } from '../../constant/Background';
 import { useStore } from '../../store';
 import { parseNumber } from '../../utils/parseNumber';
 import { DebouncedInput as Input } from '../Form/DebounceInput';
-import { Disclosure } from './Disclosure/Disclosure';
+import { Disclosure } from './components/Disclosure/Disclosure';
 import { ReactComponent as Logo } from '../../static/Logo.svg';
 import { Button } from '../Button';
+import { Keybind } from './components/Keybind/Keybind';
+import { useZoomPanHelper } from 'react-flow-renderer';
 
 export const SideBar = observer(() => {
   const { FlowStore, TreeStore } = useStore();
+  const { fitView } = useZoomPanHelper();
   return (
     <div className="SideBar bg-white p-2 shadow-lg max-w-xs w-80 transition-all">
       <div className="my-5 px-4">
@@ -31,7 +34,13 @@ export const SideBar = observer(() => {
           onChange={(val) => FlowStore.setGapSize(parseNumber(val, GAP_SIZE))}
         />
       </Disclosure>
-      <Button onClick={() => TreeStore.showAllTree()}>Show All Tree</Button>
+      <Disclosure title="Keybinds">
+        <Keybind keys={['Control', 'Shift', 'S']} desc="Global search" />
+      </Disclosure>
+      <Button onClick={() => TreeStore.showAllTree()}>Reset</Button>
+      <Button onClick={() => fitView({ padding: 2, includeHiddenNodes: true })}>
+        Default zoom
+      </Button>
     </div>
   );
 });
