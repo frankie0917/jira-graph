@@ -21,7 +21,7 @@ export const DebouncedInput = forwardRef<HTMLInputElement, Props>(
       if (val !== defaultValue && !isUndefined(defaultValue)) {
         setVal(defaultValue);
       }
-    }, [defaultValue]);
+    }, [defaultValue, val]);
     return (
       <Input
         ref={ref}

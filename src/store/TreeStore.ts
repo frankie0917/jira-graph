@@ -1,5 +1,5 @@
-import { differenceBy, isNull, uniq, uniqBy } from 'lodash';
-import { makeAutoObservable, toJS } from 'mobx';
+import { isNull, uniq, uniqBy } from 'lodash';
+import { makeAutoObservable } from 'mobx';
 import { Edge, Node } from 'react-flow-renderer';
 import { DEFAULT_EDGE } from '../constant/Edge';
 import { DEFAULT_NODE } from '../constant/Node';
