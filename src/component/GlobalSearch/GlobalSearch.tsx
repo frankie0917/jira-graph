@@ -1,6 +1,8 @@
+import { isUndefined } from 'lodash';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useZoomPanHelper } from 'react-flow-renderer';
 import useKeyboardShortcut from 'use-keyboard-shortcut';
+import { COLUMN_GAP, ROW_GAP } from '../../constant/Gap';
 import { useTreeStore } from '../../store';
 import { findStringOverlap } from '../../utils/findStringOverLap';
 import { DebouncedInput } from '../Form/DebounceInput';
@@ -13,11 +15,24 @@ export const GlobalSearch = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const TreeStore = useTreeStore();
   const { transform } = useZoomPanHelper();
-
   const [results, setResults] = useState<string[]>([]);
-  const onItemClick = (pos: { x: number; y: number }) => {
-    // calculate to the middle
-    transform({ x: -pos.x + 50, y: -pos.y + 50, zoom: 1 });
+
+  const onItemClick = (key: string, pos: { x: number; y: number }) => {
+    const canvasEl = document.querySelector('svg.react-flow__edges');
+    const transformPosition = { x: -pos.x + 50, y: -pos.y + 50, zoom: 1 };
+    const { height, width } = TreeStore.treeMap.children[key];
+    if (canvasEl) {
+      transformPosition.x =
+        canvasEl.clientWidth / 2 -
+        pos.x -
+        (isUndefined(width) ? COLUMN_GAP : width) / 2;
+      transformPosition.y =
+        canvasEl.clientHeight / 2 -
+        pos.y -
+        (isUndefined(height) ? ROW_GAP : height) / 2;
+    }
+
+    transform(transformPosition);
     setKeyword('');
     setIsOpen(false);
   };
@@ -78,7 +93,7 @@ export const GlobalSearch = () => {
             return (
               <div
                 key={key}
-                onClick={() => onItemClick(props.position)}
+                onClick={() => onItemClick(key, props.position)}
                 style={{ cursor: 'pointer' }}
               >
                 <NodeItem {...props} listMode />

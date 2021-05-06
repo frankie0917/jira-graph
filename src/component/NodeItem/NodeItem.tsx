@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { DataType, TICKET_STATUS } from '../../typing/DataType';
 import { Handle, Node, Position, useZoomPanHelper } from 'react-flow-renderer';
 import styles from './NodeItem.module.scss';
@@ -6,6 +6,7 @@ import { IssueIcon } from '../IssueIcon/IssueIcon';
 import { EyeIcon as SolidEye } from '@heroicons/react/solid';
 import { EyeIcon as OutlineEye } from '@heroicons/react/outline';
 import { useTreeStore } from '../../store';
+import { isUndefined } from 'lodash';
 
 const parseProgress = (status: TICKET_STATUS) => {
   switch (status) {
@@ -22,95 +23,113 @@ const parseProgress = (status: TICKET_STATUS) => {
   }
 };
 
-export const NodeItem = React.memo(
-  (
-    node: Node<DataType> & { listMode?: boolean; xPos?: number; yPos?: number },
-  ) => {
-    const TreeStore = useTreeStore();
-    const { fitView, transform } = useZoomPanHelper();
-    if (!node.data) return null;
-    const isListMode = node.listMode;
-    const { title, issue_type, key, status } = node.data;
+type Props = Node<DataType> & {
+  listMode?: boolean;
+  xPos?: number;
+  yPos?: number;
+};
 
-    const renderIconButton = (
-      tooltip: string,
-      onClick: () => void,
-      Icon: JSX.Element,
-    ) => (
-      <button data-tooltip-text={tooltip} onClick={onClick}>
-        {Icon}
-      </button>
-    );
-    return (
-      <div>
-        {!isListMode && <Handle type="target" position={Position.Left} />}
-        <div
-          className={styles.contentWrapper}
-          data-list-mode={isListMode}
-          data-issue-type={issue_type}
-        >
-          <div className={styles.heading}>
-            <div className={styles.iconKey}>
-              <div className={styles.icon}>
-                <IssueIcon type={issue_type} />
-              </div>
-              <div className={styles.link}>
-                <a
-                  href={`https://aftership.atlassian.net/browse/${key}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {key}
-                </a>
-              </div>
+export const NodeItem = React.memo((node: Props) => {
+  const TreeStore = useTreeStore();
+  const { fitView, transform } = useZoomPanHelper();
+  const wrapperDivRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (
+      wrapperDivRef.current === null ||
+      // only set width and height at first time
+      !isUndefined(TreeStore.treeMap.children[node.id].width) ||
+      !isUndefined(TreeStore.treeMap.children[node.id].height)
+    )
+      return;
+
+    const { clientHeight, clientWidth } = wrapperDivRef.current;
+
+    TreeStore.treeMap.children[node.id].width = clientWidth;
+    TreeStore.treeMap.children[node.id].height = clientHeight;
+  }, [TreeStore.treeMap.children, node.id]);
+
+  if (!node.data) return null;
+  const isListMode = node.listMode;
+  const { title, issue_type, key, status } = node.data;
+
+  const renderIconButton = (
+    tooltip: string,
+    onClick: () => void,
+    Icon: JSX.Element,
+  ) => (
+    <button data-tooltip-text={tooltip} onClick={onClick}>
+      {Icon}
+    </button>
+  );
+  return (
+    <div ref={wrapperDivRef}>
+      {!isListMode && <Handle type="target" position={Position.Left} />}
+      <div
+        className={styles.contentWrapper}
+        data-list-mode={isListMode}
+        data-issue-type={issue_type}
+      >
+        <div className={styles.heading}>
+          <div className={styles.iconKey}>
+            <div className={styles.icon}>
+              <IssueIcon type={issue_type} />
             </div>
-            <div
-              style={{ cursor: 'pointer' }}
-              onClick={() => {
-                console.log('node', node);
-                transform({
-                  x: -(node.xPos ?? 0) + 50,
-                  y: -(node.yPos ?? 0) + 50,
-                  zoom: 1,
-                });
-              }}
-              className={styles.title}
-            >
-              {title}
+            <div className={styles.link}>
+              <a
+                href={`https://aftership.atlassian.net/browse/${key}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {key}
+              </a>
             </div>
           </div>
           <div
-            className={styles.progress}
-            style={{ background: parseProgress(status)[1] }}
+            style={{ cursor: 'pointer' }}
+            onClick={() => {
+              transform({
+                x: -(node.xPos ?? 0) + 50,
+                y: -(node.yPos ?? 0) + 50,
+                zoom: 1,
+              });
+            }}
+            className={styles.title}
           >
-            {parseProgress(status)[0]}
+            {title}
           </div>
-          {!isListMode && (
-            <div className={styles.actionWrapper}>
-              {renderIconButton(
-                'Show only item related node',
-                () => {
-                  TreeStore.showOnlyItemRelatedNode(node.id);
-                },
-                <SolidEye className=" w-5 h-5 text-green-600" />,
-              )}
-              {renderIconButton(
-                'Render only item related node',
-                () => {
-                  TreeStore.renderOnlyItemRelatedNode(node.id, () => {
-                    // TODO: FIX ME: hacky way, find a better way!
-                    setTimeout(() => {
-                      fitView({ padding: 2, includeHiddenNodes: true });
-                    });
-                  });
-                },
-                <OutlineEye className=" w-5 h-5 text-indigo-600" />,
-              )}
-            </div>
-          )}
         </div>
-        {!isListMode && <Handle type="source" position={Position.Right} />}
+        <div
+          className={styles.progress}
+          style={{ background: parseProgress(status)[1] }}
+        >
+          {parseProgress(status)[0]}
+        </div>
+        {!isListMode && (
+          <div className={styles.actionWrapper}>
+            {renderIconButton(
+              'Show only item related node',
+              () => {
+                TreeStore.showOnlyItemRelatedNode(node.id);
+              },
+              <SolidEye className=" w-5 h-5 text-green-600" />,
+            )}
+            {renderIconButton(
+              'Render only item related node',
+              () => {
+                TreeStore.renderOnlyItemRelatedNode(node.id, () => {
+                  // TODO: FIX ME: hacky way, find a better way!
+                  setTimeout(() => {
+                    fitView({ padding: 2, includeHiddenNodes: true });
+                  });
+                });
+              },
+              <OutlineEye className=" w-5 h-5 text-indigo-600" />,
+            )}
+          </div>
+        )}
       </div>
-    );
-  },
-);
+      {!isListMode && <Handle type="source" position={Position.Right} />}
+    </div>
+  );
+});
